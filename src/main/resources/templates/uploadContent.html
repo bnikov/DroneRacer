@@ -1,0 +1,26 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div style="width: 50%; margin: auto; padding-top: 4em;">
+        <form method="post" th:action="@{'/addPhoto/{id}' (id=${pilot.getId()})}" enctype="multipart/form-data">
+            <h4 class="mb-4 mt-0 text-white">Add New Photo</h4>
+            <div th:text="${param.error}" class="text-danger"></div>
+            <div class="mb-3">
+                <input class="form-control" type="file" id="photo" name="photo" multiple="multiple" required="">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">Upload Photo</button>
+                </div>
+            </div>
+        </form>
+
+        <form method="post" th:action="@{'/addVideo/{id}' (id=${pilot.getId()})}">
+            <div class="col-md-6" style="display: inline;">
+                <h4 class="mb-4 mt-0 text-white">Add New Video</h4>
+                <input type="text" id="video_link" name="video_link" class="form-control" placeholder="Video Link"
+                       required=""
+                       autofocus="">
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Add Video</button>
+            </div>
+        </form>
+    </div>
+</section>

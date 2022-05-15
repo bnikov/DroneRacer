@@ -1,0 +1,99 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <style>
+        body, html {
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .bg-image {
+            /* The image used */
+
+            background-image: url("https://www.dronezine.it/wp-content/uploads/2016/01/fpv-drone-racing.jpg");
+            /*background-image: url("https://www.fai.org/sites/default/files/fai-drone-racing-world-track_copy.jpg");*/
+
+            /* Add the blur effect */
+            transform: scaleX(-1);
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+
+            /* Full height */
+            height: 100vh;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /*Position text in the middle of the page/image*/
+        .bg-text {
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+            color: white;
+            font-weight: bold;
+            /*border: 3px solid #f1f1f1;*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            /*width: 80%;*/
+            padding: 20px;
+            /*text-align: center;*/
+        }
+    </style>
+
+    <div class="bg-image">
+    </div>
+    <div class="bg-text">
+        <div style="display: flex; justify-content: center;">
+            <div class="card text-white" style="width: 18rem; background: #121212; border: 2px white;">
+                <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + race.getBase64()}" alt="#" >
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${race.raceDescription}"></h5>
+                    <p class="card-text" th:text="${race.city.cityName + ', ' + race.city.country.getCountryName()}"></p>
+                    <p class="card-text" th:text="${'Start Date ' + race.startDate.toString()}"></p>
+                    <p class="card-text" th:text="${'End Date ' + race.endDate.toString()}"></p>
+                </div>
+                <div class="card-body">
+                    <th:block th:if="${isRegistered == false}">
+                        <form action="/raceRegister" method = "post">
+                            <input type="hidden" id="raceId" name="raceId" th:value="${race.getId()}">
+                            <input type="hidden" id="pilotUsername" name="pilotUsername" th:value="${#request.getRemoteUser()}">
+                            <button class="btn btn-success" type="submit">Register</button>
+                            <form>
+                    </th:block>
+                    <th:block th:if="${isRegistered == true}">
+                        <form action="/raceWithdraw" method = "post">
+                            <input type="hidden" id="raceId" name="raceId" th:value="${race.getId()}">
+                            <input type="hidden" id="pilotUsername" name="pilotUsername" th:value="${#request.getRemoteUser()}">
+                            <button class="btn btn-danger" type="submit">Withdraw</button>
+                            <form>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+
+        <table class="table text-white" style="margin: auto;">
+            <thead>
+            <tr>
+                <th scope="col">Pilot Name</th>
+                <th scope="col">Profile Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="participant : ${participants}">
+                <td th:text="${participant.getPilot().getUsername()}"></td>
+                <td>
+                    <a th:href="@{'/profile/{username}' (username=${participant.getPilot().getUsername()})}"
+                       class="btn btn-info"> View Profile</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>

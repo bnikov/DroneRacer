@@ -1,0 +1,26 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <form class="form-signin mt-xl-5" method="post" action="/admin/addOrganizer" enctype="multipart/form-data">
+            <h2 class="form-signin-heading text-white">Add Organizer</h2>
+            <p>
+                <label for="organizer_name" class="sr-only text-white">Organizer Name</label>
+                <input type="text" id="organizer_name" name="organizer_name" class="form-control"
+                       placeholder="Organizer Name" required=true
+                       autofocus="">
+            </p>
+
+            <p>
+                <label for="url" class="sr-only text-white">Organizer Website</label>
+                <input type="text" id="url" name="url" class="form-control" placeholder="Website" required=true
+                       autofocus="">
+            </p>
+
+            <div class="mb-3">
+                <label for="photo" class="form-label text-white">Organizer Photo</label>
+                <input class="form-control" type="file" id="photo" name="photo" multiple="multiple" required=true>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Organizer</button>
+        </form>
+    </div>
+</section>

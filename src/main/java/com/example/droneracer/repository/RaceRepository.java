@@ -1,0 +1,9 @@
+package com.example.droneracer.repository;
+
+import com.example.droneracer.Model.Race;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RaceRepository extends JpaRepository<Race, Integer> {
+}

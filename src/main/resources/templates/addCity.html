@@ -1,0 +1,21 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <form class="form-signin mt-xl-5" method="post" action="/admin/addCity" enctype="multipart/form-data">
+            <h2 class="form-signin-heading text-white">Add City</h2>
+            <p>
+                <label for="city_name" class="sr-only text-white">City Name</label>
+                <input type="text" id="city_name" name="city_name" class="form-control" placeholder="city_name"
+                       required=true
+                       autofocus="">
+            </p>
+
+            <label for="country_id" class="sr-only text-white">Country</label>
+            <select id="country_id" name="country_id" class="form-select" aria-label="Default select example">
+                <option th:each="country : ${countries}" th:value="${country.getId()}"
+                        th:text="${country.getCountryName()}"></option>
+            </select>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add City</button>
+        </form>
+    </div>
+</section>

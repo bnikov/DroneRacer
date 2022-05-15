@@ -1,0 +1,31 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container" style="width: 60%; margin: auto; margin-top: 5em;">
+        <div class="ui items" th:each="organizer : ${organizers}">
+            <div class="item">
+                <div class="image">
+                    <th:block th:if="${organizer.getPhoto() != null}">
+                        <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + organizer.getBase64()}" alt="#">
+                    </th:block>
+                    <th:block th:if="${organizer.getPhoto() == null}">
+                        <img th:src="@{/default-profile-pic.jpg}" alt="..." width="130">
+                    </th:block>
+                </div>
+                <div class="content">
+                    <a class="header text-white" style="padding-top: 2rem"
+                       th:text="${organizer.getOrganizerName()}"></a>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated">
+                        <form th:action="@{'/admin/deleteOrganizer/{id}' (id=${organizer.getId()})}"
+                              th:method="POST">
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger delete-product" onclick="return confirm('Are you sure?')">
+                                <i class="fa fa-trash">Delete</i>
+                            </button>
+                        </form>
+                        <i class="right chevron icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

@@ -1,0 +1,25 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container" style="width: 60%; margin: auto; margin-top: 5em;">
+        <div class="ui items" th:each="video : ${videos}">
+            <div class="item">
+                <div class="image">
+                    <iframe th:src='${video.getVideoLink().replace("watch?v=", "embed/")}'
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated">
+                        <form th:action="@{'/deleteVideo/{id}' (id=${video.getId()})}"
+                              th:method="POST">
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger delete-product" onclick="return confirm('Are you sure?')">
+                                <i class="fa fa-trash">Delete</i>
+                            </button>
+                        </form>
+                        <i class="right chevron icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

@@ -1,0 +1,35 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container">
+        <form class="form-signin mt-xl-5" method="post" th:action="@{'/addDrone/{id}' (id=${pilot.getId()})}">
+            <h2 class="form-signin-heading text-white">Add Drone</h2>
+            <p>
+                <label for="motors" class="sr-only text-white">Motors</label>
+                <input type="text" id="motors" name="motors" class="form-control" placeholder="Motors" required=true
+                       autofocus="">
+            </p>
+            <p>
+                <label for="esc" class="sr-only text-white">ESC</label>
+                <input type="text" id="esc" name="esc" class="form-control" placeholder="ESC" required=true
+                       autofocus="">
+            </p>
+            <p>
+                <label for="frame" class="sr-only text-white">Frame</label>
+                <input type="text" id="frame" name="frame" class="form-control" placeholder="Frame" required=true
+                       autofocus="">
+            </p>
+            <p>
+                <label for="flightController" class="sr-only text-white">Flight Controller</label>
+                <input type="text" id="flightController" name="flightController" class="form-control"
+                       placeholder="Flight Controller" required=true
+                       autofocus="">
+            </p>
+            <p>
+                <label for="battery" class="sr-only text-white">Battery</label>
+                <input type="text" id="battery" name="battery" class="form-control" placeholder="Battery" required=true
+                       autofocus="">
+            </p>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Add Drone</button>
+        </form>
+    </div>
+</section>

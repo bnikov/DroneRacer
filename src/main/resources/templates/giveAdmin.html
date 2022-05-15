@@ -1,0 +1,39 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container" style="width: 60%; margin: auto; margin-top: 5em;">
+        <div class="ui items" th:each="pilot : ${pilots}">
+            <div class="item">
+                <div class="content" style="padding-top: 1rem">
+                    <a class="header" th:text="${pilot.getUsername()}"
+                       th:href="@{'/pilot/{id}' (id=${pilot.getUsername()})}" style="color: #e1e3e6"></a>
+                    <div class="meta" style="color: #e1e3e6">
+                        <span th:text="${pilot.getFirstName() + ' ' + pilot.getLastName()}"></span>
+                    </div>
+                    <div class="description">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated">
+
+                        <th:block th:if="${pilot.getRole().name() == 'ROLE_ADMIN'}">
+                            <form th:action="@{'/admin/revokeAdmin/{id}' (id=${pilot.getId()})}" th:method="POST">
+                                <button type="submit" class="btn btn-sm btn-danger delete-product">
+                                    Revoke Admin Permissions
+                                </button>
+                            </form>
+                        </th:block>
+                        <th:block th:if="${pilot.getRole().name() != 'ROLE_ADMIN'}">
+                            <form th:action="@{'/admin/giveAdmin/{id}' (id=${pilot.getId()})}" th:method="POST">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Give Admin Permissions
+                                </button>
+                            </form>
+                        </th:block>
+
+
+                        <i class="right chevron icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

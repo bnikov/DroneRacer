@@ -1,0 +1,58 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <div class="container">
+    <form class="form-signin mt-xl-5" method="post" th:action="@{'/admin/editRace/{id}' (id=${race.getId()})}"enctype="multipart/form-data">
+      <h2 class="form-signin-heading text-white">Add Race</h2>
+
+      <p>
+        <label for="race_description" class="sr-only text-white">Race Description</label>
+        <input type="text" id="race_description" name="race_description" class="form-control" placeholder="Description" required=""
+               autofocus="" th:value="${race.getRaceDescription()}">
+      </p>
+
+
+      <div id="start_date_picker" class="md-form md-outline input-with-post-icon datepicker">
+        <label for="start_date" class="text-white">Start Date</label>
+        <input placeholder="Start date" type="date" id="start_date" name="start_date" class="form-control" th:value="${race.getStartDate()}">
+        <i class="fas fa-calendar input-prefix" tabindex=0></i>
+      </div>
+
+
+      <div id="end_date_picker" class="md-form md-outline input-with-post-icon datepicker">
+        <label for="end_date" class="text-white">End Date</label>
+        <input placeholder="End date" type="date" name="end_date" id="end_date" class="form-control" th:value="${race.getEndDate()}">
+        <i class="fas fa-calendar input-prefix" tabindex=0></i>
+      </div>
+
+
+      <div class="col-md-4">
+        <label for="city_id" class="form-label text-white">Race Location</label>
+        <select id="city_id" class="form-select" name="city_id">
+          <option th:each="city : ${cities}" th:value="${city.getId()}" th:text="${city.getCityName()}"
+          th:selected="${city == race.getCity()}"></option>
+        </select>
+      </div>
+
+
+      <div class="col-md-4">
+        <label for="organizer_id" class="form-label text-white">Organizer</label>
+        <select id="organizer_id" class="form-select" name="organizer_id">
+          <option th:each="organizer : ${organizers}" th:value="${organizer.getId()}" th:text="${organizer.getOrganizerName()}"
+          th:selected="${organizer == race.getOrganizer()}"></option>
+        </select>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Edit Race</button>
+    </form>
+
+    <form method="post" th:action="@{'/admin/changeRacePhoto/{id}' (id=${race.getId()})}" enctype="multipart/form-data">
+      <h4 class="mb-4 mt-0 "></h4>
+      <div class="mb-3">
+        <label for="track_photo" class="form-label text-white">Change race photo</label>
+        <input class="form-control" type="file" id="track_photo" name="track_photo" multiple="multiple">
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-primary btn-lg">Upload Picture</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>

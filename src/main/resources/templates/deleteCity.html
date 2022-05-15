@@ -1,0 +1,22 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container" style="width: 60%; margin: auto; margin-top: 5em;">
+        <div class="ui items" th:each="city : ${cities}">
+            <div class="item">
+                <div class="content" style="padding-top: 1rem">
+                    <p th:text="${city.getCityName()}" class="text-white"></p>
+                </div>
+                <div class="extra">
+                    <div class="ui right floated">
+                        <form th:action="@{'/admin/deleteCity/{id}' (id=${city.getId()})}"
+                              th:method="POST">
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger delete-product" onclick="return confirm('Are you sure?')">
+                                <i class="fa fa-trash">Delete</i>
+                            </button>
+                        </form>
+                        <i class="right chevron icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

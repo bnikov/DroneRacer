@@ -1,0 +1,138 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        .profile-head {
+            transform: translateY(6.2rem);
+            width: 70%;
+        }
+
+        .cover {
+            background: url("/cover-photo.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        body {
+            /*background: #654ea3 !important;*/
+            /*background: linear-gradient(to right, #e96443, #904e95) !important;*/
+            background-color: #000000 !important;
+            background-image: linear-gradient(147deg, #000000 0%, #434343 74%) !important;
+            height: 100% !important;
+            margin: 0 !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed !important;
+        }
+    </style>
+
+
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3">
+                            <th:block th:if="${profilePicture != null}">
+                                <img th:src="${'data:image/jpeg;charset=utf-8;base64,' + profilePicture.getBase64()}"
+                                     alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                            </th:block>
+                            <th:block th:if="${profilePicture == null}">
+                                <img th:src="@{/default-profile-pic.jpg}" alt="..." width="130"
+                                     class="rounded mb-2 img-thumbnail">
+                            </th:block>
+                            <div class="cover-buttons" th:if="${showButtons}">
+                                <a th:href="@{'/edit/{id}' (id=${pilot.getId()})}"
+                                   class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                                <a th:href="@{'/uploadContent/{id}' (id=${pilot.getId()})}"
+                                   class="btn btn-outline-dark btn-sm btn-block">Upload Content</a>
+                            </div>
+                        </div>
+                        <div class="media-body mb-5 text-white" style="padding-bottom: 0.2rem">
+                            <h4 class="mt-0 mb-0" th:text="${pilot.getFirstName() + ' ' + pilot.getLastName()}"></h4>
+                            <p class="small mb-4" th:text="${pilot.getUsername()}"><i
+                                    class="fas fa-map-marker-alt mr-2"></i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a href="#photos">
+                                <h5 class="font-weight-bold mb-0 d-block">[[${image_count}]]</h5><small
+                                    class="text-muted"> <i
+                                    class="fas fa-image mr-1"></i>Photos</small>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#videos">
+                                <h5 class="font-weight-bold mb-0 d-block">[[${video_count}]]</h5><small
+                                    class="text-muted"> <i
+                                    class="fas fa-image mr-1"></i>Videos</small>
+                            </a>
+
+                        </li>
+                        <li class="list-inline-item">
+                            <a th:href="@{'/viewRaces/{id}' (id=${pilot.getId()})}">
+                                <h5 class="font-weight-bold mb-0 d-block">[[${race_count}]]</h5><small
+                                    class="text-muted"> <i
+                                    class="fas fa-image mr-1"></i>Races</small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-4 py-3">
+                    <div class="px-4 py-3">
+                        <h5 class="mb-0">About</h5>
+                        <div class="p-4 rounded shadow-sm bg-light mydark" th:text="${pilot.getBio()}"></div>
+                    </div>
+                </div>
+
+                <th:block th:if="${drone != null}">
+                    <div class="px-4 py-3">
+                        <div class="px-4 py-3">
+                            <h5 class="mb-0">Drone specifications</h5>
+                            <div class="p-4 rounded shadow-sm bg-light mydark">
+                                Motors: [[${drone.getMotors()}]] <br>
+                                ESC: [[${drone.getEsc()}]] <br>
+                                Frame: [[${drone.getFrame()}]] <br>
+                                Flight controller: [[${drone.getFlightController()}]] <br>
+                                Battery: [[${drone.getBattery()}]] <br>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+
+
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 id="photos" class="mb-0">Recent photos</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 mb-2 pr-lg-1" th:each="image : ${images}"><img
+                                th:src="${'data:image/jpeg;charset=utf-8;base64,' + image.getBase64()}" alt=""
+                                class="img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
+                </div>
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 id="videos" class="mb-0">Recent Videos</h5>
+                    </div>
+
+                    <div class="row">
+                        <div th:each="video : ${videos}" class="col-lg-6 mb-2 pr-lg-1">
+                            <iframe th:src='${video.getVideoLink().replace("watch?v=", "embed/")}'
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

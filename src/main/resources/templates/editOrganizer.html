@@ -1,0 +1,31 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div class="container bg-text">
+        <form method="post" th:action="@{'/editOrganizer/{id}' (id=${organizer.getId()})}">
+            <h2 class="form-signin-heading mt-xl-5 text-white">Edit Organizer</h2>
+            <p>
+                <label for="organizer_name" class="sr-only text-white">Organizer name</label>
+                <input type="text" id="organizer_name" name="organizer_name" class="form-control"
+                       placeholder="Organizer Name" required=""
+                       autofocus="" th:value="(${organizer} != null ? ${organizer.getOrganizerName()} : '')">
+            </p>
+
+            <p>
+                <label for="url" class="sr-only text-white">Organizer website</label>
+                <input type="text" id="url" name="url" class="form-control" placeholder="URL" required=""
+                       autofocus="" th:value="(${organizer} != null ? ${organizer.getUrl()} : '')">
+            </p>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit Changes</button>
+        </form>
+        <form method="post" th:action="@{'/updateOrganizerPhoto/{id}' (id=${organizer.getId()})}"
+              enctype="multipart/form-data">
+            <h4 class="mb-4 mt-0 "></h4>
+            <div class="mb-3">
+                <label for="photo" class="form-label text-white">Change organizer photo</label>
+                <input class="form-control" type="file" id="photo" name="photo" multiple="multiple">
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary btn-lg">Upload Profile Picture</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

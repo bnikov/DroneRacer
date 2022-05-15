@@ -1,0 +1,166 @@
+<section xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+          integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Page title -->
+                <div class="my-5">
+                    <h1 class="text-white" style="margin-left: 1.5rem;">Edit Profile</h1>
+                    <hr>
+                </div>
+
+                <div class="file-upload">
+                    <div class="row mb-5 gx-5">
+                        <th:block th:if="${!isFacebookUser}">
+                            <!--account details-->
+                            <form method="post" th:action="@{'/edit/{id}' (id=${pilot.getId()})}">
+                                <input type="hidden" id="username" name="username" class="form-control"
+                                       placeholder="Username" required=""
+                                       autofocus="" th:value="(${pilot} != null ? ${pilot.getUsername()} : '')">
+                                <div class="col-xxl-8 mb-5 mb-xxl-0">
+                                    <div class="bg-secondary-soft px-4 py-5 rounded">
+                                        <div class="row g-3">
+                                            <h4 class="mb-4 mt-0 text-white">Account Details</h4>
+                                            <!-- Email -->
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-control">Email</label>
+                                                <input type="email" id="email" name="email" class="form-control"
+                                                       placeholder="Email" required=""
+                                                       autofocus=""
+                                                       th:value="(${pilot} != null ? ${pilot.getEmail()} : '')">
+
+                                            </div>
+                                            <!-- First Name -->
+                                            <div class="col-md-6">
+                                                <label for="first_name" class="form-control">First Name</label>
+                                                <input type="text" id="first_name" name="first_name" class="form-control"
+                                                       placeholder="First Name" required="" autofocus=""
+                                                       th:value="(${pilot} != null ? ${pilot.getFirstName()} : '')">
+                                            </div>
+                                            <!-- Last Name -->
+                                            <div class="col-md-6">
+                                                <label for="last_name" class="form-control">Last Name</label>
+                                                <input type="text" id="last_name" name="last_name" class="form-control"
+                                                       placeholder="Last Name" required=""
+                                                       autofocus=""
+                                                       th:value="(${pilot} != null ? ${pilot.getLastName()} : '')">
+                                            </div>
+                                            <!-- Bio -->
+                                            <div class="col-md-6">
+                                                <span class="input-group-text">Bio</span>
+                                                <textarea class="form-control" aria-label="With textarea" name="bio"
+                                                          th:text="(${pilot} != null ? ${pilot.getBio()} : '')"
+                                                          th:value="(${pilot} != null ? ${pilot.getFirstName()} : '')"></textarea>
+                                            </div>
+
+                                            <!--Submit-->
+                                            <div class="col-md-6">
+                                                <button type="submit" class="btn btn-primary btn-lg">Update profile</button>
+                                            </div>
+                                        </div> <!-- Row END -->
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- change password -->
+                            <div class="col-xxl-6">
+                                <div class="bg-secondary-soft px-4 py-5 rounded">
+                                    <div class="row g-3">
+                                        <h4 class="my-4 text-white">Change Password</h4>
+                                        <div th:text="${param.error}" class="text-danger"></div>
+                                        <form method="post" th:action="@{'/changePassword/{id}' (id=${pilot.getId()})}">
+                                            <p>
+                                                <label for="oldPassword" class="form-label text-white">Old Password</label>
+                                                <input type="password" id="oldPassword" name="oldPassword"
+                                                       class="form-control" placeholder="Password"
+                                                       required="">
+                                            </p>
+                                            <p>
+                                                <label for="newPassword" class="form-label text-white">New Password</label>
+                                                <input type="password" id="newPassword" name="newPassword"
+                                                       class="form-control" placeholder="Password"
+                                                       required="">
+                                            </p>
+                                            <p>
+                                                <label for="repeatedPassword" class="form-label text-white">Repeat
+                                                    Password</label>
+                                                <input type="password" id="repeatedPassword" name="repeatedPassword"
+                                                       class="form-control"
+                                                       placeholder="Repeat Password" required="">
+                                            </p>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Change Password
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+
+                        <form method="post" th:action="@{'/profilePictureUpdate/{id}' (id=${pilot.getId()})}"
+                              enctype="multipart/form-data" style="margin-bottom: 2rem">
+                            <h4 class="mb-4 mt-0"></h4>
+                            <div class="mb-3" style="margin-left: 1.5rem; width: 64%;">
+                                <label for="photo" class="form-label text-white">Change Profile Picture</label>
+                                <input class="form-control" type="file" id="photo" name="photo" multiple="multiple"
+                                       required>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="savePP" id="savePP">
+                                    <label class="form-check-label text-white" for="savePP">Add old profile picture to
+                                        public photos</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg">Upload Profile Picture</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <h4 style="margin-left: 1.5rem;" class="my-4 text-white">Manage Content</h4>
+                        <div style=" margin-top: 1rem">
+                            <th:block th:if="${hasDrone == false}">
+                                <a th:href="@{'/addDrone/{id}' (id=${pilot.getId()})}" style="margin-right: 1rem">
+                                    <button class="btn btn-primary btn-lg" style="margin-left: 1.5rem;">Add drone
+                                    </button>
+                                </a>
+                            </th:block>
+                            <th:block th:if="${hasDrone == true}">
+                                <div style="display: inline-flex">
+                                    <a th:href="@{'/editDrone/{id}' (id=${pilot.getId()})}" style="margin-right: 1rem">
+                                        <button class="btn btn-primary btn-lg" style="margin-left: 1.5rem;">Edit drone
+                                        </button>
+                                    </a>
+                                    <form style="margin-right: 1rem"
+                                          th:action="@{'/deleteDrone/{id}' (id=${pilot.getId()})}"
+                                          th:method="POST">
+                                        <button class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')">Delete Drone</button>
+                                    </form>
+                                </div>
+                            </th:block>
+
+                            <div style="display: inline-flex">
+                                <a th:href="@{'/deletePhoto/{id}' (id=${pilot.getId()})}" style="margin-right: 1rem">
+                                    <button class="btn btn-danger btn-lg">Delete Images</button>
+                                </a>
+                                </br>
+                                <a th:href="@{'/deleteVideo/{id}' (id=${pilot.getId()})}" style="margin-right: 1rem">
+                                    <button class="btn btn-danger btn-lg">Delete Videos</button>
+                                </a>
+                            </div>
+                        </div>
+                        <form style="margin-top: 3rem; display: grid; margin-left: 1.5rem;"
+                              th:action="@{'/deleteAccount/{id}' (id=${pilot.getId()})}"
+                              th:method="POST">
+                            <h4 class="my-4 text-white">WARNING! THIS PROCESS CAN NOT BE
+                                REVERSED</h4>
+                            <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Are you sure?')">
+                                <i class="fa fa-trash"> DELETE ACCOUNT</i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
